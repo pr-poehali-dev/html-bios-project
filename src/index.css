@@ -4,98 +4,595 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-}
+    --radius: 0.5rem;
 
-@layer base {
+    /* BIOS custom vars */
+    --bios-bg: #050810;
+    --bios-bg2: #080d1a;
+    --bios-panel: rgba(12, 18, 35, 0.95);
+    --bios-border: rgba(100, 120, 220, 0.18);
+    --bios-border-glow: rgba(120, 80, 255, 0.35);
+    --bios-accent: #7c5cfc;
+    --bios-accent2: #4f8fff;
+    --bios-accent-glow: rgba(124, 92, 252, 0.4);
+    --bios-text: #c8d8f8;
+    --bios-text-dim: #5a6a8a;
+    --bios-text-bright: #e8f0ff;
+    --bios-row-hover: rgba(100, 120, 255, 0.07);
+    --bios-row-active: rgba(124, 92, 252, 0.12);
+    --bios-green: #2aff9a;
+    --bios-red: #ff4466;
+    --bios-yellow: #ffd060;
+    --font-mono: "JetBrains Mono", monospace;
+    --font-ui: "Rajdhani", sans-serif;
+  }
+
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* ===================== ROOT ===================== */
+.bios-root {
+  font-family: var(--font-mono);
+  background: var(--bios-bg);
+  color: var(--bios-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===================== BG ===================== */
+.bios-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 50% -10%,
+      rgba(80, 60, 200, 0.18) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 90% 80%,
+      rgba(60, 100, 255, 0.12) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 10% 90%,
+      rgba(100, 40, 200, 0.1) 0%,
+      transparent 60%
+    ),
+    linear-gradient(160deg, #050810 0%, #060a14 50%, #050810 100%);
+  pointer-events: none;
+}
+.bios-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(80, 100, 200, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 100, 200, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ===================== HEADER ===================== */
+.bios-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 56px;
+  background: var(--bios-panel);
+  border-bottom: 1px solid var(--bios-border);
+  box-shadow:
+    0 1px 0 var(--bios-border-glow),
+    0 4px 24px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+}
+
+.bios-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bios-logo-brand {
+  font-family: var(--font-ui);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  background: linear-gradient(135deg, #7c5cfc, #4f8fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 0 8px rgba(124, 92, 252, 0.6));
+}
+.bios-logo-sep {
+  color: var(--bios-border-glow);
+  font-weight: 300;
+  font-size: 18px;
+}
+.bios-logo-title {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--bios-text);
+  text-transform: uppercase;
+}
+.bios-version {
+  font-size: 10px;
+  color: var(--bios-text-dim);
+  padding: 2px 6px;
+  border: 1px solid var(--bios-border);
+  border-radius: 3px;
+  letter-spacing: 1px;
+}
+
+.bios-header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.bios-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--bios-border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  width: 320px;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.bios-search-wrap:focus-within {
+  border-color: var(--bios-accent);
+  box-shadow:
+    0 0 0 2px var(--bios-accent-glow),
+    0 0 16px rgba(124, 92, 252, 0.15);
+}
+.bios-search-icon {
+  color: var(--bios-text-dim);
+  flex-shrink: 0;
+}
+.bios-search {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--bios-text-bright);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+.bios-search::placeholder {
+  color: var(--bios-text-dim);
+}
+.bios-search-clear {
+  background: none;
+  border: none;
+  color: var(--bios-text-dim);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+.bios-search-clear:hover {
+  color: var(--bios-text);
+}
+
+.bios-header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+.bios-clock {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--bios-text-bright);
+  letter-spacing: 1px;
+}
+.bios-date {
+  font-size: 10px;
+  color: var(--bios-text-dim);
+  letter-spacing: 0.5px;
+}
+
+/* ===================== BODY ===================== */
+.bios-body {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ===================== NAV ===================== */
+.bios-nav {
+  width: 180px;
+  flex-shrink: 0;
+  background: var(--bios-panel);
+  border-right: 1px solid var(--bios-border);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  gap: 2px;
+}
+
+.bios-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  color: var(--bios-text-dim);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    color 0.15s,
+    background 0.15s;
+  overflow: hidden;
+}
+.bios-nav-item:hover {
+  color: var(--bios-text);
+  background: var(--bios-row-hover);
+}
+.bios-nav-item.active {
+  color: var(--bios-text-bright);
+  background: var(--bios-row-active);
+}
+.bios-nav-icon {
+  flex-shrink: 0;
+}
+.bios-nav-active-bar {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background: linear-gradient(180deg, var(--bios-accent), var(--bios-accent2));
+  box-shadow: 0 0 8px var(--bios-accent-glow);
+}
+
+.bios-nav-spacer {
+  flex: 1;
+}
+
+.bios-btn-save,
+.bios-btn-exit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 4px 12px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+.bios-btn-save {
+  background: linear-gradient(
+    135deg,
+    rgba(124, 92, 252, 0.25),
+    rgba(79, 143, 255, 0.15)
+  );
+  color: var(--bios-accent);
+  border: 1px solid rgba(124, 92, 252, 0.35);
+}
+.bios-btn-save:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(124, 92, 252, 0.4),
+    rgba(79, 143, 255, 0.25)
+  );
+  box-shadow: 0 0 16px var(--bios-accent-glow);
+}
+.bios-btn-save.saved {
+  background: linear-gradient(
+    135deg,
+    rgba(42, 255, 154, 0.2),
+    rgba(42, 255, 154, 0.1)
+  );
+  color: var(--bios-green);
+  border-color: rgba(42, 255, 154, 0.3);
+}
+.bios-btn-exit {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--bios-text-dim);
+  border: 1px solid var(--bios-border);
+}
+.bios-btn-exit:hover {
+  color: var(--bios-text);
+  border-color: rgba(255, 68, 102, 0.3);
+  background: rgba(255, 68, 102, 0.08);
+}
+
+/* ===================== MAIN ===================== */
+.bios-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 120, 220, 0.25) transparent;
+}
+.bios-main::-webkit-scrollbar {
+  width: 5px;
+}
+.bios-main::-webkit-scrollbar-track {
+  background: transparent;
+}
+.bios-main::-webkit-scrollbar-thumb {
+  background: rgba(100, 120, 220, 0.25);
+  border-radius: 3px;
+}
+
+.bios-section-wrap {
+  max-width: 860px;
+  animation: biosIn 0.25s ease;
+}
+
+@keyframes biosIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bios-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--bios-border);
+}
+.bios-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-ui);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--bios-text-bright);
+}
+.bios-section-count {
+  font-size: 11px;
+  color: var(--bios-text-dim);
+  letter-spacing: 1px;
+  border: 1px solid var(--bios-border);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+/* ===================== TABLE ===================== */
+.bios-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.bios-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+  min-height: 40px;
+}
+.bios-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.015);
+}
+.bios-row.editable {
+  cursor: pointer;
+}
+.bios-row.editable:hover {
+  background: var(--bios-row-hover);
+  border-color: var(--bios-border);
+}
+.bios-row.editable:hover .bios-edit-hint {
+  opacity: 1;
+}
+.bios-row.danger-row:hover {
+  background: rgba(255, 68, 102, 0.07);
+  border-color: rgba(255, 68, 102, 0.2);
+}
+.bios-row.profile-row {
+  background: rgba(79, 143, 255, 0.04);
+}
+.bios-row.empty-row {
+  opacity: 0.4;
+}
+.bios-row.action-row {
+  border-top: 1px solid var(--bios-border);
+  margin-top: 4px;
+}
+
+.bios-row-key {
+  flex: 1;
+  font-size: 12px;
+  color: var(--bios-text-dim);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bios-row-section-tag {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--bios-accent);
+  border: 1px solid rgba(124, 92, 252, 0.3);
+  padding: 1px 5px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.bios-edit-hint {
+  opacity: 0;
+  color: var(--bios-accent);
+  transition: opacity 0.15s;
+}
+
+.bios-row-value {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.bios-val {
+  font-size: 12px;
+  color: var(--bios-text-bright);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+.bios-val.empty {
+  color: var(--bios-text-dim);
+  font-style: italic;
+}
+.bios-val.danger {
+  color: var(--bios-red);
+}
+
+.bios-select,
+.bios-input {
+  background: rgba(12, 18, 35, 0.95);
+  border: 1px solid var(--bios-accent);
+  color: var(--bios-text-bright);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  outline: none;
+  box-shadow: 0 0 12px var(--bios-accent-glow);
+  min-width: 180px;
+  text-align: right;
+}
+.bios-select option {
+  background: #080d1a;
+  color: var(--bios-text-bright);
+}
+
+.bios-empty {
+  text-align: center;
+  padding: 48px;
+  color: var(--bios-text-dim);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+/* ===================== FOOTER ===================== */
+.bios-footer {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 40px;
+  background: var(--bios-panel);
+  border-top: 1px solid var(--bios-border);
+  flex-shrink: 0;
+}
+.bios-footer-keys {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 11px;
+  color: var(--bios-text-dim);
+  letter-spacing: 0.3px;
+}
+.bios-footer-keys kbd {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--bios-text);
+  margin-right: 4px;
+}
+.bios-footer-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--bios-text-dim);
+  letter-spacing: 0.5px;
+}
+.bios-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.bios-status-dot.blue {
+  background: var(--bios-accent2);
+  box-shadow: 0 0 8px var(--bios-accent2);
+  animation: blink 2s ease-in-out infinite;
+}
+.bios-status-dot.green {
+  background: var(--bios-green);
+  box-shadow: 0 0 8px var(--bios-green);
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
   }
 }
