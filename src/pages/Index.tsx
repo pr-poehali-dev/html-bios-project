@@ -230,6 +230,8 @@ export default function Index() {
   const [saved, setSaved] = useState(false);
   const [time, setTime] = useState(() => new Date());
   const [lang, setLang] = useState<Lang>("ru");
+  const [exitModal, setExitModal] = useState(false);
+  const [exiting, setExiting] = useState(false);
 
   useState(() => {
     const t = setInterval(() => setTime(new Date()), 1000);
@@ -277,6 +279,17 @@ export default function Index() {
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
     setEditingKey(null);
+  };
+
+  const handleSaveAndExit = () => {
+    setSaved(true);
+    setExiting(true);
+    setTimeout(() => {
+      setPostDone(false);
+      setExiting(false);
+      setSaved(false);
+      setExitModal(false);
+    }, 1800);
   };
 
   const locale = lang === "en" ? "en-US" : "ru-RU";
@@ -349,9 +362,9 @@ export default function Index() {
               <Icon name={saved ? "Check" : "Save"} size={14} />
               <span>{saved ? t.saved : t.save}</span>
             </button>
-            <button className="bios-btn-exit" onClick={() => {}}>
+            <button className="bios-btn-save-exit" onClick={() => setExitModal(true)}>
               <Icon name="LogOut" size={14} />
-              <span>{t.exit}</span>
+              <span>{lang === "en" ? "Save & Exit" : "Сохранить и выйти"}</span>
             </button>
           </nav>
         )}
@@ -475,6 +488,42 @@ export default function Index() {
           <span>{saved ? (lang === "en" ? "Changes saved" : "Изменения сохранены") : t.status}</span>
         </div>
       </footer>
+
+      {/* Save & Exit Modal */}
+      {exitModal && (
+        <div className="bios-modal-overlay" onClick={() => !exiting && setExitModal(false)}>
+          <div className="bios-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="bios-modal-icon">
+              <Icon name={exiting ? "Check" : "Save"} size={28} />
+            </div>
+            <div className="bios-modal-title">
+              {lang === "en" ? "Save & Exit Setup" : "Сохранить и выйти"}
+            </div>
+            <div className="bios-modal-desc">
+              {exiting
+                ? (lang === "en" ? "Saving changes and rebooting..." : "Сохранение настроек и перезагрузка...")
+                : (lang === "en" ? "Save all changes and exit BIOS Setup?" : "Сохранить все изменения и выйти из настроек BIOS?")
+              }
+            </div>
+            {exiting ? (
+              <div className="bios-modal-progress">
+                <div className="bios-modal-bar" />
+              </div>
+            ) : (
+              <div className="bios-modal-actions">
+                <button className="bios-modal-confirm" onClick={handleSaveAndExit}>
+                  <Icon name="Check" size={14} />
+                  {lang === "en" ? "Yes, Save & Exit" : "Да, сохранить и выйти"}
+                </button>
+                <button className="bios-modal-cancel" onClick={() => setExitModal(false)}>
+                  <Icon name="X" size={14} />
+                  {lang === "en" ? "Cancel" : "Отмена"}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -597,6 +597,161 @@
   }
 }
 
+/* ===================== SAVE & EXIT BUTTON ===================== */
+.bios-btn-save-exit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 4px 12px;
+  padding: 9px 12px;
+  border-radius: 6px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: linear-gradient(
+    135deg,
+    rgba(220, 16, 32, 0.35),
+    rgba(180, 10, 20, 0.2)
+  );
+  color: #ff6677;
+  border: 1px solid rgba(220, 16, 32, 0.5);
+}
+.bios-btn-save-exit:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(220, 16, 32, 0.55),
+    rgba(180, 10, 20, 0.35)
+  );
+  box-shadow: 0 0 18px rgba(220, 16, 32, 0.45);
+  color: #fff;
+}
+
+/* ===================== MODAL ===================== */
+.bios-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: biosIn 0.2s ease;
+}
+.bios-modal {
+  background: #0e0a0a;
+  border: 1px solid rgba(220, 16, 32, 0.4);
+  border-radius: 10px;
+  padding: 40px 48px;
+  min-width: 380px;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow:
+    0 0 60px rgba(220, 16, 32, 0.2),
+    0 24px 60px rgba(0, 0, 0, 0.7);
+  text-align: center;
+}
+.bios-modal-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(220, 16, 32, 0.12);
+  border: 1px solid rgba(220, 16, 32, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bios-accent2);
+  box-shadow: 0 0 20px rgba(220, 16, 32, 0.25);
+}
+.bios-modal-title {
+  font-family: var(--font-ui);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--bios-text-bright);
+}
+.bios-modal-desc {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--bios-text-dim);
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+.bios-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+}
+.bios-modal-confirm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 6px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(135deg, #e01020, #c00010);
+  color: #fff;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(220, 16, 32, 0.35);
+}
+.bios-modal-confirm:hover {
+  background: linear-gradient(135deg, #ff2233, #e01020);
+  box-shadow: 0 4px 28px rgba(220, 16, 32, 0.55);
+  transform: translateY(-1px);
+}
+.bios-modal-cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--bios-border);
+  color: var(--bios-text-dim);
+  transition: all 0.2s;
+}
+.bios-modal-cancel:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--bios-text);
+}
+.bios-modal-progress {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.bios-modal-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #e01020, #ff4444);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(220, 16, 32, 0.6);
+  animation: postBarFill 1.6s ease forwards;
+}
+
 /* ===================== POST BUTTON ===================== */
 .bios-post-btn {
   display: inline-flex;
