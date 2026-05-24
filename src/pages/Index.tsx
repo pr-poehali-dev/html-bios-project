@@ -17,7 +17,7 @@ const BIOS_DATA: Record<string, { label: string; icon: string; items: BiosItem[]
     label: "Система",
     icon: "Monitor",
     items: [
-      { key: "Производитель", value: "ASUS ROG MAXIMUS Z790", editable: false },
+      { key: "Производитель", value: "MSI MEG Z790 ACE", editable: false },
       { key: "Версия BIOS", value: "3.21.1428", editable: false },
       { key: "Дата выпуска", value: "2024-11-15", editable: false },
       { key: "Серийный номер", value: "K4B0CV123456", editable: false },
@@ -33,12 +33,12 @@ const BIOS_DATA: Record<string, { label: string; icon: string; items: BiosItem[]
     label: "Процессор",
     icon: "Cpu",
     items: [
-      { key: "Модель", value: "Intel Core i9-14900K", editable: false },
+      { key: "Модель", value: "Intel Xeon i9-14900K", editable: false },
       { key: "Архитектура", value: "Raptor Lake Refresh", editable: false },
       { key: "Ядра / Потоки", value: "24 / 32", editable: false },
       { key: "Базовая частота", value: "3.20 ГГц", editable: false },
       { key: "Макс. частота (Turbo)", value: "6.00 ГГц", editable: false },
-      { key: "TDP", value: "125 Вт", editable: false },
+      { key: "TDP", value: "253 Вт", editable: false },
       { key: "Кэш L3", value: "36 МБ", editable: false },
       { key: "Разгон (OC)", value: "Авто", editable: true, options: ["Авто", "Вручную", "XMP"] },
       { key: "C-States", value: "Включены", editable: true, options: ["Включены", "Выключены"] },
@@ -155,9 +155,9 @@ export default function Index() {
       <header className="bios-header">
         <div className="bios-header-left">
           <div className="bios-logo">
-            <span className="bios-logo-brand">ROG</span>
+            <span className="bios-logo-brand">MSI</span>
             <span className="bios-logo-sep">|</span>
-            <span className="bios-logo-title">UEFI BIOS Utility</span>
+            <span className="bios-logo-title">Click BIOS 5</span>
             <span className="bios-version">v3.21</span>
           </div>
         </div>
