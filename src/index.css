@@ -25,20 +25,20 @@
     --ring: 212.7 26.8% 83.9%;
     --radius: 0.5rem;
 
-    /* BIOS custom vars */
-    --bios-bg: #050810;
-    --bios-bg2: #080d1a;
-    --bios-panel: rgba(12, 18, 35, 0.95);
-    --bios-border: rgba(100, 120, 220, 0.18);
-    --bios-border-glow: rgba(120, 80, 255, 0.35);
-    --bios-accent: #7c5cfc;
-    --bios-accent2: #4f8fff;
-    --bios-accent-glow: rgba(124, 92, 252, 0.4);
-    --bios-text: #c8d8f8;
-    --bios-text-dim: #5a6a8a;
-    --bios-text-bright: #e8f0ff;
-    --bios-row-hover: rgba(100, 120, 255, 0.07);
-    --bios-row-active: rgba(124, 92, 252, 0.12);
+    /* BIOS custom vars — MSI Red */
+    --bios-bg: #0a0808;
+    --bios-bg2: #120a0a;
+    --bios-panel: rgba(18, 10, 10, 0.97);
+    --bios-border: rgba(220, 40, 40, 0.18);
+    --bios-border-glow: rgba(220, 30, 30, 0.4);
+    --bios-accent: #e01020;
+    --bios-accent2: #ff4444;
+    --bios-accent-glow: rgba(220, 16, 32, 0.45);
+    --bios-text: #f0d8d8;
+    --bios-text-dim: #7a5a5a;
+    --bios-text-bright: #fff0f0;
+    --bios-row-hover: rgba(220, 40, 40, 0.07);
+    --bios-row-active: rgba(220, 16, 32, 0.14);
     --bios-green: #2aff9a;
     --bios-red: #ff4466;
     --bios-yellow: #ffd060;
@@ -74,20 +74,20 @@
   background:
     radial-gradient(
       ellipse 80% 60% at 50% -10%,
-      rgba(80, 60, 200, 0.18) 0%,
+      rgba(200, 20, 20, 0.2) 0%,
       transparent 70%
     ),
     radial-gradient(
       ellipse 60% 50% at 90% 80%,
-      rgba(60, 100, 255, 0.12) 0%,
+      rgba(180, 20, 20, 0.1) 0%,
       transparent 60%
     ),
     radial-gradient(
       ellipse 50% 40% at 10% 90%,
-      rgba(100, 40, 200, 0.1) 0%,
+      rgba(160, 10, 10, 0.1) 0%,
       transparent 60%
     ),
-    linear-gradient(160deg, #050810 0%, #060a14 50%, #050810 100%);
+    linear-gradient(160deg, #0a0808 0%, #100808 50%, #0a0808 100%);
   pointer-events: none;
 }
 .bios-bg::before {
@@ -95,8 +95,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(80, 100, 200, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(80, 100, 200, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(200, 40, 40, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 40, 40, 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -127,12 +127,12 @@
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 4px;
-  background: linear-gradient(135deg, #7c5cfc, #4f8fff);
+  background: linear-gradient(135deg, #e01020, #ff4444);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: none;
-  filter: drop-shadow(0 0 8px rgba(124, 92, 252, 0.6));
+  filter: drop-shadow(0 0 8px rgba(220, 16, 32, 0.7));
 }
 .bios-logo-sep {
   color: var(--bios-border-glow);
@@ -289,8 +289,8 @@
   bottom: 6px;
   width: 3px;
   border-radius: 0 2px 2px 0;
-  background: linear-gradient(180deg, var(--bios-accent), var(--bios-accent2));
-  box-shadow: 0 0 8px var(--bios-accent-glow);
+  background: linear-gradient(180deg, #e01020, #ff4444);
+  box-shadow: 0 0 10px rgba(220, 16, 32, 0.6);
 }
 
 .bios-nav-spacer {
@@ -317,19 +317,19 @@
 .bios-btn-save {
   background: linear-gradient(
     135deg,
-    rgba(124, 92, 252, 0.25),
-    rgba(79, 143, 255, 0.15)
+    rgba(220, 16, 32, 0.22),
+    rgba(255, 68, 68, 0.12)
   );
-  color: var(--bios-accent);
-  border: 1px solid rgba(124, 92, 252, 0.35);
+  color: var(--bios-accent2);
+  border: 1px solid rgba(220, 16, 32, 0.4);
 }
 .bios-btn-save:hover {
   background: linear-gradient(
     135deg,
-    rgba(124, 92, 252, 0.4),
-    rgba(79, 143, 255, 0.25)
+    rgba(220, 16, 32, 0.38),
+    rgba(255, 68, 68, 0.22)
   );
-  box-shadow: 0 0 16px var(--bios-accent-glow);
+  box-shadow: 0 0 16px rgba(220, 16, 32, 0.4);
 }
 .bios-btn-save.saved {
   background: linear-gradient(
