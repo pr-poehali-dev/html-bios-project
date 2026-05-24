@@ -189,6 +189,7 @@ function PostScreen({ onDone }: { onDone: () => void }) {
   const [visibleCount, setVisibleCount] = useState(0);
   const [done, setDone] = useState(false);
   const [entering, setEntering] = useState(false);
+  const [redFlash, setRedFlash] = useState(false);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const triggerEnter = () => {
@@ -196,8 +197,9 @@ function PostScreen({ onDone }: { onDone: () => void }) {
     setEntering(true);
     timersRef.current.forEach(clearTimeout);
     setVisibleCount(POST_LINES.length);
-    setTimeout(() => setDone(true), 300);
-    setTimeout(() => onDone(), 900);
+    setTimeout(() => setRedFlash(true), 300);
+    setTimeout(() => setDone(true), 600);
+    setTimeout(() => onDone(), 1100);
   };
 
   useEffect(() => {
@@ -205,6 +207,7 @@ function PostScreen({ onDone }: { onDone: () => void }) {
     POST_LINES.forEach((line, i) => {
       timers.push(setTimeout(() => setVisibleCount(i + 1), line.delay));
     });
+    timers.push(setTimeout(() => setRedFlash(true), 3000));
     timers.push(setTimeout(() => setDone(true), 3300));
     timers.push(setTimeout(() => onDone(), 3900));
     timersRef.current = timers;
@@ -218,7 +221,7 @@ function PostScreen({ onDone }: { onDone: () => void }) {
   }, [entering]);
 
   return (
-    <div className={`post-screen ${done ? "post-fade-out" : ""}`} onClick={triggerEnter}>
+    <div className={`post-screen ${redFlash ? "post-red-flash" : ""} ${done ? "post-fade-out" : ""}`} onClick={triggerEnter}>
       <div className="post-scanlines" />
       <div className="post-content">
         {POST_LINES.slice(0, visibleCount).map((line, i) => (
