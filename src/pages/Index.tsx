@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
 type Lang = "ru" | "en";
@@ -160,7 +160,69 @@ const BIOS_DATA: Record<string, { label: string; labelEn: string; icon: string; 
 
 type SectionKey = keyof typeof BIOS_DATA;
 
+const POST_LINES = [
+  { text: "MSI Click BIOS 5  v3.21.1428", delay: 0, color: "#ff3333" },
+  { text: "Copyright (C) 2024 Micro-Star International Co., Ltd.", delay: 120, color: "#888" },
+  { text: "", delay: 200 },
+  { text: "CPU: Intel Xeon i9-14900K @ 3.20GHz", delay: 350, color: "#c8d0e8" },
+  { text: "Cores: 24  Threads: 32  Cache L3: 36MB", delay: 500, color: "#c8d0e8" },
+  { text: "CPU Temperature: 42°C  VCORE: 1.260V", delay: 650, color: "#c8d0e8" },
+  { text: "", delay: 720 },
+  { text: "Memory Test: DDR5-5600  64GB  Dual Channel", delay: 850, color: "#c8d0e8" },
+  { text: "Slot A1: 32768MB  Slot B1: 32768MB", delay: 1000, color: "#aaa" },
+  { text: "Memory Test ..... OK", delay: 1250, color: "#2aff9a" },
+  { text: "", delay: 1350 },
+  { text: "Detecting NVMe devices...", delay: 1500, color: "#c8d0e8" },
+  { text: "  [M.2-1] Samsung 990 Pro 2TB  PCIe 5.0 x4", delay: 1700, color: "#aaa" },
+  { text: "  [M.2-2] WD Black SN850X 1TB  PCIe 4.0 x4", delay: 1850, color: "#aaa" },
+  { text: "  [SATA1] Seagate Barracuda 4TB", delay: 2000, color: "#aaa" },
+  { text: "", delay: 2100 },
+  { text: "Secure Boot: ON   TPM 2.0: ON   Fast Boot: ON", delay: 2200, color: "#c8d0e8" },
+  { text: "", delay: 2350 },
+  { text: "Press [DEL] to enter BIOS Setup", delay: 2500, color: "#ff3333", blink: true },
+  { text: "Press [F11] to enter Boot Menu", delay: 2650, color: "#ffaa00" },
+  { text: "", delay: 2750 },
+  { text: "Entering BIOS Setup...", delay: 2900, color: "#7c9cff" },
+];
+
+function PostScreen({ onDone }: { onDone: () => void }) {
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    POST_LINES.forEach((line, i) => {
+      timers.push(setTimeout(() => setVisibleCount(i + 1), line.delay));
+    });
+    timers.push(setTimeout(() => setDone(true), 3300));
+    timers.push(setTimeout(() => onDone(), 3900));
+    return () => timers.forEach(clearTimeout);
+  }, [onDone]);
+
+  return (
+    <div className={`post-screen ${done ? "post-fade-out" : ""}`}>
+      <div className="post-scanlines" />
+      <div className="post-content">
+        {POST_LINES.slice(0, visibleCount).map((line, i) => (
+          <div key={i} className={`post-line ${line.blink ? "post-blink" : ""}`} style={{ color: line.color || "#c8d0e8" }}>
+            {line.text || "\u00a0"}
+          </div>
+        ))}
+        {visibleCount >= POST_LINES.length && (
+          <div className="post-bar-wrap">
+            <div className="post-bar" />
+          </div>
+        )}
+      </div>
+      <div className="post-skip" onClick={onDone}>
+        Press any key to skip ›
+      </div>
+    </div>
+  );
+}
+
 export default function Index() {
+  const [postDone, setPostDone] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionKey>("system");
   const [search, setSearch] = useState("");
   const [editingKey, setEditingKey] = useState<string | null>(null);
@@ -219,6 +281,10 @@ export default function Index() {
 
   const locale = lang === "en" ? "en-US" : "ru-RU";
 
+  if (!postDone) {
+    return <PostScreen onDone={() => setPostDone(true)} />;
+  }
+
   return (
     <div className="bios-root">
       <div className="bios-bg" />
@@ -230,6 +296,10 @@ export default function Index() {
             <span className="bios-logo-sep">|</span>
             <span className="bios-logo-title">{t.title}</span>
             <span className="bios-version">v3.21</span>
+            <button className="bios-post-btn" onClick={() => setPostDone(false)} title="Show POST screen">
+              <Icon name="Power" size={12} />
+              POST
+            </button>
           </div>
         </div>
         <div className="bios-header-center">
