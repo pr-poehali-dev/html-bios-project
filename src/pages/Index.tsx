@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
 type Lang = "ru" | "en";
@@ -188,6 +188,17 @@ const POST_LINES = [
 function PostScreen({ onDone }: { onDone: () => void }) {
   const [visibleCount, setVisibleCount] = useState(0);
   const [done, setDone] = useState(false);
+  const [entering, setEntering] = useState(false);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const triggerEnter = () => {
+    if (entering) return;
+    setEntering(true);
+    timersRef.current.forEach(clearTimeout);
+    setVisibleCount(POST_LINES.length);
+    setTimeout(() => setDone(true), 300);
+    setTimeout(() => onDone(), 900);
+  };
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
@@ -196,11 +207,18 @@ function PostScreen({ onDone }: { onDone: () => void }) {
     });
     timers.push(setTimeout(() => setDone(true), 3300));
     timers.push(setTimeout(() => onDone(), 3900));
+    timersRef.current = timers;
     return () => timers.forEach(clearTimeout);
   }, [onDone]);
 
+  useEffect(() => {
+    const handleKey = () => triggerEnter();
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [entering]);
+
   return (
-    <div className={`post-screen ${done ? "post-fade-out" : ""}`}>
+    <div className={`post-screen ${done ? "post-fade-out" : ""}`} onClick={triggerEnter}>
       <div className="post-scanlines" />
       <div className="post-content">
         {POST_LINES.slice(0, visibleCount).map((line, i) => (
@@ -208,14 +226,19 @@ function PostScreen({ onDone }: { onDone: () => void }) {
             {line.text || "\u00a0"}
           </div>
         ))}
-        {visibleCount >= POST_LINES.length && (
+        {entering && (
+          <div className="post-line" style={{ color: "#ff3333", marginTop: 8 }}>
+            Entering BIOS Setup...
+          </div>
+        )}
+        {visibleCount >= POST_LINES.length && !entering && (
           <div className="post-bar-wrap">
             <div className="post-bar" />
           </div>
         )}
       </div>
-      <div className="post-skip" onClick={onDone}>
-        Press any key to skip ›
+      <div className="post-skip">
+        Press any key or click to enter BIOS ›
       </div>
     </div>
   );
